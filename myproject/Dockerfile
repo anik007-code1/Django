@@ -1,6 +1,8 @@
-FROM python3.10.12-slim-buster
+# sudo docker-compose up --build
 
-WORkDIR /app
+FROM python:3.10.12-slim-buster
+
+WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
