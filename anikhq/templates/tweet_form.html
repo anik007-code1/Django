@@ -15,7 +15,8 @@ Anik and Django
     <form method="post" enctype="multipart/form-data" class="form">
         {% csrf_token %}
         {{form.as_p}}
-    <button class="btn btn-warning" type="submit">Submit</button></form>
+    <button class="btn btn-warning" type="submit">Submit</button>
+    </form>
     <a href="{% url 'tweet_list' %}">Back to tweet list</a>
 </h2>
 {% endblock %}

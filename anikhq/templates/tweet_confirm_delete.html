@@ -5,6 +5,12 @@ Anik and Django
 {% endblock %}
 
 {% block container %}
-<h1 class="text-center mt-4">Welcome to Django Project</h1>
+<h1 class="text-center mt-4">Welcome to Django Project, Are you sure?</h1>
+<form method="post">
+            {% csrf_token %}
+
+    <button class="btn btn-warning" type="submit">Delete</button>
+    <a class="btn btn-success" href="{% url 'tweet_list' %}">Cancel</a>
+</form>
 {% endblock %}
 
