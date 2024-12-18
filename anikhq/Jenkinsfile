@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage{
+            steps{
+                sh '''
+                echo "Installing Jenkins in the Server"
+                chmod +x jenkins.sh
+                ./jenkins.sh
+                '''
+            }
+        }
+
+        stage{
+            steps{
+                sh '''
+                echo "Installing Docker in the Server"
+                chmod +x docker.sh
+                ./docker.sh
+                '''
+            }
+        }
+
+        stage("Clone Code") {
+            steps {
+                echo "Cloning the code"
+                git url: "https://github.com/siddhantbhattarai/Django-Todo-App.git", branch: "main"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                echo "Building the Docker image"
+                sh "docker build -t anikhq ."
+            }
+        }
+
+        stage("Push to Docker Hub") {
+            steps {
+                echo "Pushing the Docker image to Docker Hub"
+                withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
+                    sh "docker tag anikhq ${env.dockerHubUser}/anikhq:latest"
+                    sh "docker push ${env.dockerHubUser}/anikhq:latest"
+                }
+            }
+        }
+
+        stage{
+            steps{
+            echo "Deploying the container"
+            sh '''
+            docker run -d -p 8000:8000 anikhq:latest
+            '''
+            }
+        }
+    }
+}
