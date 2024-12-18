@@ -25,7 +25,7 @@ pipeline {
         stage("Clone Code") {
             steps {
                 echo "Cloning the code"
-                git url: "https://anik007-code1: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@github.com/anik007-code1/Django.git/", branch: "origin/website"
+                git url: "https://github.com/anik007-code1/Django.git", branch: "origin/website"
             }
         }
 
